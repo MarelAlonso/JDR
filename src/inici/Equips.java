@@ -54,6 +54,7 @@ public static void crear(){
 }
 
 public static void consultar(){
+    System.out.println("\n==LLISTA DE EQUIPS\n==");
     for (Equip e : llista){
         System.out.println(e);
     }
@@ -82,4 +83,5 @@ public static void eliminar() {
 
     }
 }
+
 }

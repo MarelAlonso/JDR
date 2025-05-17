@@ -1,4 +1,5 @@
 package inici;
+import altres.Poder;
 import teclat.funIO;
 import altres.Equip;
 import personatjes.Alien;
@@ -52,36 +53,39 @@ public class JocDeRolMarioAlonso {
 
 /// ///////////////// MENU PRINCIPAL //////////////////////////////
 
-    titulo();
-    System.out.println("=========================");
-    System.out.println("Venvingut a ¡¡¡ J D R !!!");
-    System.out.println("=========================");
+titulo();
+System.out.println("=========================");
+System.out.println("Venvingut a ¡¡¡ J D R !!!");
+System.out.println("=========================");
 
-    int opcion = -1;
-    while (opcion != 0) {
-        System.out.println();
-        opcion = funIO.lligOpcio("JOC DE ROL", "Configuració", "Jugar");
-        switch (opcion) {
-            case 0:
-                System.out.println("Apagant consola");
-                break;
-            case 1:
-                menuConfig();
-                break;
-            case 2:
-                jugar();
-                break;
-            default:
-                System.out.println("Opción no válida");
-        }
+int opcion = -1;
+while (opcion != 0) {
+    System.out.println();
+    opcion = funIO.lligOpcio("JOC DE ROL", "Configuració", "Crear dades de joc", "Jugar");
+    switch (opcion) {
+        case 0:
+            System.out.println("Apagant consola");
+            break;
+        case 1:
+            menuConfig();
+            break;
+        case 2:
+            crearjugadors();
+            break;
+        case 3:
+            jugar();
+            break;
+        default:
+            System.out.println("Opción no válida");
     }
+}
 
 }
 /// //////////////////// FUNCIONES /////////////////////
 
 public static void crearjugadors() {
 
-    System.out.println("\n== GENERANT EQUPS I JUGADORS ==");
+    System.out.println("\n== GENERATS EQUPS, JUGADORS i PODERS==\n");
     Equip eq1 = new Equip("SEMI");
     Equip eq2 = new Equip("PRESENCIAL");
 
@@ -89,9 +93,9 @@ public static void crearjugadors() {
     Equips.llista.add(eq2);
 
 
-    Jugador j1 = new Guerrer("paco",90,10,200);
-    Jugador j2 = new Huma("mario",60,40,200);
-    Jugador j3 = new Alien("josue",50,50,130);
+    Jugador j1 = new Guerrer("PACO", 70, 30, 200);
+    Jugador j2 = new Huma("MARIO", 60, 40, 200);
+    Jugador j3 = new Alien("JOSUE", 50, 50, 130);
     Jugadors.llista.add(j1);
     Jugadors.llista.add(j2);
     Jugadors.llista.add(j3);
@@ -99,15 +103,37 @@ public static void crearjugadors() {
     eq1.posa(j2);
     eq1.posa(j3);
 
-    Jugador j4 = new Guerrer("abdo",90,10,200);
-    Jugador j5 = new Huma("ana cris",60,40,200);
-    Jugador j6 = new Alien("alumne 2",50,50,130);
+    Jugador j4 = new Guerrer("ABDO", 70, 30, 200);
+    Jugador j5 = new Huma("ANA CRIS", 60, 40, 200);
+    Jugador j6 = new Alien("", 50, 50, 130);
     Jugadors.llista.add(j4);
     Jugadors.llista.add(j5);
     Jugadors.llista.add(j6);
     eq2.posa(j4);
     eq2.posa(j5);
     eq2.posa(j6);
+
+    Poder p1 = new Poder("Fuego", 10, 0);
+    Poder p2 = new Poder("Agua", 5, 5);
+    Poder p3 = new Poder("Roca", 0, 10);
+    Poder p4 = new Poder("Furia", 15, -5);
+    Poder p5 = new Poder("Meditar", -5, 10);
+    Poder p6 = new Poder("Evolucion", 10, 10);
+
+    j1.posaP(p1);
+    j1.posaP(p2);
+    j2.posaP(p3);
+    j2.posaP(p4);
+    j3.posaP(p5);
+    j3.posaP(p6);
+    j4.posaP(p1);
+    j4.posaP(p6);
+    j5.posaP(p2);
+    j5.posaP(p5);
+    j6.posaP(p3);
+    j6.posaP(p4);
+
+
 }
 
 public static void titulo(){
@@ -154,8 +180,8 @@ public static void menuConfig(){
                 Equips.menu();
                 break;
             case 3:
-                System.out.println("COMING SOON");
-//                Poders.menu();
+                Poders.menu();
+                break;
             default:
                 System.out.println("Opción no válida");
         }
@@ -163,15 +189,7 @@ public static void menuConfig(){
 }
 
 public static void jugar(){
-
-    System.out.println("=====================================================================================");
-    String elec = funIO.lligString("La partida va ha començar, vols que els personatjes es generen automaticament? si(s)\n=====================================================================================");
-
-    if (elec.equalsIgnoreCase("s")){
-        crearjugadors();
-    }
     System.out.println();
-
     System.out.println("¡¡¡¡COMENÇA LA BATALLA!!!!");
     Random dau = new Random();
     int torn = 1;
@@ -188,14 +206,14 @@ public static void jugar(){
         if (atacant.getVides() <= 0){
             System.out.println("====================\n ANUNCI DE DERROTA\n====================");
             System.out.println("El jugador atacant " + atacant + " ha sigut eliminat per que te " + atacant.getVides() + " vides i ha mort");
-            eliminarjug(atacant.getNom());
+            eliminarmuertos(atacant.getNom());
             System.out.println("===================================================================================================================");
             System.out.println();
         }
         if (defensor.getVides() <= 0){
             System.out.println("====================\n ANUNCI DE DERROTA\n====================");
             System.out.println("El jugador defensor " + defensor + " ha sigut eliminat per que te " + atacant.getVides() + " vides i ha mort");
-            eliminarjug(defensor.getNom());
+            eliminarmuertos(defensor.getNom());
             System.out.println("===================================================================================================================");
             System.out.println();
         }
@@ -223,13 +241,13 @@ public static void jugar(){
             System.out.println();
             Jugadors.llista.clear();
             Equips.llista.clear();
+            Poders.eliminarPoders();
             break;
         }
     }
-
 }
 
-static void eliminarjug(String nomp) {
+static void eliminarmuertos(String nomp){
 
     Jugador bot = new Jugador(nomp, 0, 0, 0);
     int index = Jugadors.llista.indexOf(bot);
@@ -242,7 +260,6 @@ static void eliminarjug(String nomp) {
         Jugadors.llista.remove(index);
         System.out.println(nomp + " ha sigut esborrat de la partida");
     }
-
 }
 
 /// ////////////////////////////// pruebas de fases///////////////////////

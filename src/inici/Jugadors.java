@@ -1,5 +1,6 @@
 package inici;
 import altres.Equip;
+import altres.Poder;
 import personatjes.Alien;
 import personatjes.Guerrer;
 import personatjes.Huma;
@@ -20,7 +21,7 @@ public static void menu(){
 
     int opcion = -1;
     while (opcion != 0) {
-        opcion = funIO.lligOpcio("JUGADORS", "Crear", "Consultar", "Eliminar","Assignar a equip", "Llevar d'equip", "Assignar poder");
+        opcion = funIO.lligOpcio("JUGADORS", "Crear", "Consultar", "Eliminar","Assignar a equip", "Llevar d'equip", "Assignar poder", "Llevar poder");
         switch (opcion) {
             case 0:
                 System.out.println("Tornant al menu configuració");
@@ -41,6 +42,12 @@ public static void menu(){
                 break;
             case 5:
                 llevarEq();
+                break;
+            case 6:
+                donarpoder();
+                break;
+            case 7:
+                llevarpoder();
                 break;
 
             default:
@@ -101,6 +108,7 @@ static void crear(){
    }
 
 static void consultar() {
+    System.out.println("\n =LLISTA DE JUGADORS=\n");
     for (Jugador j : llista){
         System.out.println(j);
     }
@@ -166,12 +174,70 @@ static void llevarEq(){
 
 }
 
+static void donarpoder() {
+    String nomj = funIO.lligString("Quin és el nom del jugador que vols empoderar?");
+    String nomp = funIO.lligString("Quin és el nom del poder que li vols afegir?");
+
+    // Buscar jugador per nom
+    Jugador jugadorTrobat = null;
+    for (Jugador j : Jugadors.llista) {
+        if (j.getNom().equalsIgnoreCase(nomj)) {
+            jugadorTrobat = j;
+            break;
+        }
+    }
+    // Buscar poder per nom
+    Poder poderTrobat = null;
+    for (Poder p : Poders.getLlistapod()) {
+        if (p.getNom().equalsIgnoreCase(nomp)) {
+            poderTrobat = p;
+            break;
+        }
+    }
+    if (jugadorTrobat != null && poderTrobat != null) {
+        jugadorTrobat.posaP(poderTrobat);
+
+    } else {
+        System.out.println(" Jugador o poder no trobat.");
+    }
+}
+
+public static void llevarpoder() {
+    String nomj = funIO.lligString("Nom del personatge a qui li llevaràs el poder:");
+    String nomp = funIO.lligString("Nom del poder a llevar:");
+
+    // Buscar jugador real
+    Jugador jugadorTrobat = null;
+    for (Jugador j : Jugadors.llista) {
+        if (j.getNom().equalsIgnoreCase(nomj)) {
+            jugadorTrobat = j;
+            break;
+        }
+    }
+
+    // Buscar poder real
+    Poder poderTrobat = null;
+    for (Poder p : Poders.getLlistapod()) {
+        if (p.getNom().equalsIgnoreCase(nomp)) {
+            poderTrobat = p;
+            break;
+        }
+    }
+
+    if (jugadorTrobat != null && poderTrobat != null) {
+        jugadorTrobat.llevap(poderTrobat);
+    } else {
+        System.out.println("Jugador o poder no trobat.");
+    }
+}
+
+
 static void netejatEQ(Equip e){
     for (Jugador j : llista){
         if (j.getEquip().equals(e)){
             j.setEquip(null);
         }
     }
- }
+}
 
 }
