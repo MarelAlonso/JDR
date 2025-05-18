@@ -6,7 +6,7 @@ import personatjes.Alien;
 import personatjes.Guerrer;
 import personatjes.Huma;
 import personatjes.Jugador;
-
+import java.util.ArrayList;
 import java.util.Random;
 
 public class JocDeRolMarioAlonso {
@@ -62,6 +62,7 @@ int opcion = -1;
 while (opcion != 0) {
     System.out.println();
     opcion = funIO.lligOpcio("JOC DE ROL", "Configuració", "Crear dades de joc", "Jugar");
+
     switch (opcion) {
         case 0:
             System.out.println("Apagant consola");
@@ -86,39 +87,32 @@ while (opcion != 0) {
 public static void crearjugadors() {
 
     System.out.println("\n== GENERATS EQUPS, JUGADORS i PODERS==\n");
-    Equip eq1 = new Equip("SEMI");
-    Equip eq2 = new Equip("PRESENCIAL");
-
-    Equips.llista.add(eq1);
-    Equips.llista.add(eq2);
+    Equip eq1 = new Equip("LIGTH DEFENDERS");
+    Equip eq2 = new Equip("DARKNESS SOLDIERS");
 
 
-    Jugador j1 = new Guerrer("PACO", 70, 30, 200);
-    Jugador j2 = new Huma("MARIO", 60, 40, 200);
-    Jugador j3 = new Alien("JOSUE", 50, 50, 130);
-    Jugadors.llista.add(j1);
-    Jugadors.llista.add(j2);
-    Jugadors.llista.add(j3);
+    Jugador j1 = new Guerrer("SORA", 70, 30, 200);
+    Jugador j2 = new Huma("KAIRI", 55, 45, 200);
+    Jugador j3 = new Alien("RIKU", 50, 50, 130);
+
     eq1.posa(j1);
     eq1.posa(j2);
     eq1.posa(j3);
 
-    Jugador j4 = new Guerrer("ABDO", 70, 30, 200);
-    Jugador j5 = new Huma("ANA CRIS", 60, 40, 200);
-    Jugador j6 = new Alien("", 50, 50, 130);
-    Jugadors.llista.add(j4);
-    Jugadors.llista.add(j5);
-    Jugadors.llista.add(j6);
+    Jugador j4 = new Guerrer("HEARTLESS", 60, 40, 200);
+    Jugador j5 = new Huma("ANSEM", 60, 40, 200);
+    Jugador j6 = new Alien("XEMNAS", 45, 55, 130);
+
     eq2.posa(j4);
     eq2.posa(j5);
     eq2.posa(j6);
 
-    Poder p1 = new Poder("Fuego", 10, 0);
-    Poder p2 = new Poder("Agua", 5, 5);
-    Poder p3 = new Poder("Roca", 0, 10);
-    Poder p4 = new Poder("Furia", 15, -5);
-    Poder p5 = new Poder("Meditar", -5, 10);
-    Poder p6 = new Poder("Evolucion", 10, 10);
+    Poder p1 = new Poder("Flames de l'infern", 10, 0);
+    Poder p2 = new Poder("Equilibri espiritual", 5, 5);
+    Poder p3 = new Poder("Enduriment fisic", 0, 10);
+    Poder p4 = new Poder("Fúria assassina", 15, -5);
+    Poder p5 = new Poder("Armadura inmortal", -5, 15);
+    Poder p6 = new Poder("Evolució primigènia", 10, 10);
 
     j1.posaP(p1);
     j1.posaP(p2);
@@ -133,7 +127,48 @@ public static void crearjugadors() {
     j6.posaP(p3);
     j6.posaP(p4);
 
+    ArrayList<Jugador> unirj = new ArrayList<>();
+    ArrayList<Equip> unire = new ArrayList<>();
+    ArrayList<Poder> unirp = new ArrayList<>();
 
+    unirj.add(j1);
+    unirj.add(j2);
+    unirj.add(j3);
+    unirj.add(j4);
+    unirj.add(j5);
+    unirj.add(j6);
+
+    unire.add(eq1);
+    unire.add(eq2);
+
+    unirp.add(p1);
+    unirp.add(p2);
+    unirp.add(p3);
+    unirp.add(p4);
+    unirp.add(p5);
+    unirp.add(p6);
+
+    for (Jugador j : unirj){
+        if(!Jugadors.llista.contains(j)){
+            Jugadors.llista.add(j);
+        }
+
+    }
+    for (Equip e : unire){
+        if(!Equips.llista.contains(e)){
+            Equips.llista.add(e);
+        }
+
+    }
+
+    for (Poder p : unirp){
+        if(!Poders.getLlistapod().contains(p)){
+            Poders.unirpoderlist(p);
+        }
+    }
+    unirj.clear();
+    unire.clear();
+    unirp.clear();
 }
 
 public static void titulo(){
@@ -212,7 +247,7 @@ public static void jugar(){
         }
         if (defensor.getVides() <= 0){
             System.out.println("====================\n ANUNCI DE DERROTA\n====================");
-            System.out.println("El jugador defensor " + defensor + " ha sigut eliminat per que te " + atacant.getVides() + " vides i ha mort");
+            System.out.println("El jugador defensor " + defensor + " ha sigut eliminat per que te " + defensor.getVides() + " vides i ha mort");
             eliminarmuertos(defensor.getNom());
             System.out.println("===================================================================================================================");
             System.out.println();
@@ -227,15 +262,29 @@ public static void jugar(){
             System.out.println("#######################################################################");
             System.out.println("#######################################################################");
             System.out.println();
+            eliminarmuertos(guany.getNom());
             Jugadors.llista.clear();
             Equips.llista.clear();
+            Poders.eliminarPoders();
 
             break;
         }
         if (Jugadors.llista.isEmpty()){
             System.out.println("#######################################################################");
             System.out.println("#######################################################################");
-            System.out.println("EL RESULTAT DE LA PARTIDA A SIGUT UN EMPAT !!! NO HI HA GUANYADOR ¡¡¡");
+            System.out.println("EL RESULTAT DE LA BATALLA A SIGUT UN EMPAT !!! NO HI HA GUANYADOR ¡¡¡");
+            System.out.println("#######################################################################");
+            System.out.println("#######################################################################");
+            System.out.println();
+            Jugadors.llista.clear();
+            Equips.llista.clear();
+            Poders.eliminarPoders();
+            break;
+        }
+        if (torn >= 300){
+            System.out.println("#######################################################################");
+            System.out.println("#######################################################################");
+            System.out.println("LA BATALLA A DURAT MASSA !!! NO HI HA GUANYADOR ¡¡¡");
             System.out.println("#######################################################################");
             System.out.println("#######################################################################");
             System.out.println();
@@ -247,7 +296,7 @@ public static void jugar(){
     }
 }
 
-static void eliminarmuertos(String nomp){
+public static void eliminarmuertos(String nomp){
 
     Jugador bot = new Jugador(nomp, 0, 0, 0);
     int index = Jugadors.llista.indexOf(bot);
@@ -257,8 +306,8 @@ static void eliminarmuertos(String nomp){
         if (jreal.getEquip() != null) {
             jreal.getEquip().lleva(jreal.getNom());
         }
-        Jugadors.llista.remove(index);
-        System.out.println(nomp + " ha sigut esborrat de la partida");
+        Jugadors.llista.remove(jreal);
+        ;
     }
 }
 
@@ -296,3 +345,7 @@ static void eliminarmuertos(String nomp){
 
 //}
 }
+
+
+
+

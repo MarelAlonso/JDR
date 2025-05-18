@@ -86,6 +86,7 @@ public void setEquip(Equip equipnou) {
 
 /// //  FUNCIONS ///////////////////////////////////
 protected void esColpejatamb(int quantitat){
+
     int golpe;
     golpe = quantitat - this.getPuntsdef();
     if (golpe >= 0) {
@@ -103,14 +104,17 @@ protected void esColpejatamb(int quantitat){
 }
 
 public void ataca(Jugador defensor){
-
+    // creem aci el print que utilitzara tostrings per a mosttrar els jugadors
     System.out.println(teclat.funIO.getLinia(70));
     System.out.println("ABANS DE L'ATAC:");
     System.out.println("ATACANT: " + this);
     System.out.println("DEFENSOR: " + defensor);
     System.out.println();
+
+    // doble colp atacant - defensor
     defensor.esColpejatamb(this.getPuntsatac());
     esColpejatamb(defensor.getPuntsatac());
+
     System.out.println();
     System.out.println("DESPRES DE L'ATAC:");
     System.out.println("ATACANT: " + this);
@@ -122,7 +126,6 @@ public void ataca(Jugador defensor){
 public void posaP(Poder poder){
     if (poder != null && !llistap.contains(poder)) {
         llistap.add(poder);
-
         this.setPuntsatac(getPuntsatac()+ poder.getBonusAtac());
         this.setPuntsdef(getPuntsdef()+ poder.getBonusDef());
 
@@ -176,11 +179,12 @@ public String toString() {
             ", PD:" + puntsdef +
             ", PV:" + vides + ") Poders: \n";
     for (Poder poder : llistap){
-        s += "\t-" + poder + "\n";
+        s += "\t\t-" + poder + "\n";
     }
     s += "\n";
     return s;
 }
+
 
 
 /// //////// CONSTRUCTORES////////////

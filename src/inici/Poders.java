@@ -49,6 +49,8 @@ public static void menu() {
 
 /// ///// FUNCIONS //////////////////////////////
 ///
+
+
 public static void crearPoder() {
     String nom = funIO.lligString("Quin es el nom del poder: ");
     int ba = funIO.lligInt("punts de atac que modifica: ");
@@ -71,13 +73,28 @@ public static void consultarPoder(){
 }
 
 public static void eliminarPoder(){
+    String nomp = funIO.lligString("Quin es el nom del poder a eliminar");
+
+    Poder ptemp = new Poder(nomp,0,0);
+
+    int index = llistapod.indexOf(ptemp);
+    Poder preal = Poders.llistapod.get(index);
+
+    for (Jugador jug : Jugadors.llista){
+        jug.llevap(preal);
+    }
+    llistapod.remove(preal);
+
+}
 
 
+
+public static void unirpoderlist(Poder p){
+    llistapod.add(p);
 }
 
 public static void eliminarPoders(){
     llistapod.clear();
-
 }
 
 

@@ -61,7 +61,7 @@ public static void menu(){
 static void crear(){
     boolean fin = true;
     while (fin) {
-        String raza = funIO.lligString("Selecciona el tipus de jugador que vols crear: huma(H), guerrer(G), alien(A), tornar(X) : ");
+        String raza = funIO.lligString("Selecciona el tipus de jugador que vols crear: huma(H), guerrer(G), alien(A): ");
         String nomp = funIO.lligString("Quin es el nom del personatge");
         int patack = funIO.lligInt("cuants punts de atac te el personatge");
         int pdef, pvid;
@@ -97,9 +97,6 @@ static void crear(){
           }else {
              System.out.println("el jugador "+ nomp +" ya existeix");
           }
-        }else if (raza.equalsIgnoreCase("x")) {
-            System.out.println("tornant al manu Configuracio");
-            fin = false;
         }else {
             System.out.println("opcio no valida");
         }
@@ -147,7 +144,6 @@ static void assignarEq(){
                 " ha sigut incluit a l'equip " + Equips.llista.get(indexe).getNom());
     }else{
         System.out.println("Jugador o equip no trobat.");
-        System.out.println("j: " + indexj + "e: " + indexe);
     }
 }
 
@@ -228,15 +224,6 @@ public static void llevarpoder() {
         jugadorTrobat.llevap(poderTrobat);
     } else {
         System.out.println("Jugador o poder no trobat.");
-    }
-}
-
-
-static void netejatEQ(Equip e){
-    for (Jugador j : llista){
-        if (j.getEquip().equals(e)){
-            j.setEquip(null);
-        }
     }
 }
 

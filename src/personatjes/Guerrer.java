@@ -35,7 +35,12 @@ public class Guerrer extends Huma {
 //    }
 
 
+
+
+
+
     public Guerrer(String nom,int puntsatac,int puntsdef,int vides){
         super(nom,puntsatac,puntsdef,vides);
+
     }
 }
